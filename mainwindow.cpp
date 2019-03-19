@@ -18,9 +18,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->pushButton_open, SIGNAL(pressed()), signalMapper, SLOT(map()));
     connect(ui->pushButton_close, SIGNAL(pressed()), signalMapper, SLOT(map()));
     connect(ui->pushButton_switch, SIGNAL(pressed()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushButton_open, "1");
-    signalMapper->setMapping(ui->pushButton_close, "2");
-    signalMapper->setMapping(ui->pushButton_switch, "3");
+    signalMapper->setMapping(ui->pushButton_open, "0");
+    signalMapper->setMapping(ui->pushButton_close, "1");
+    signalMapper->setMapping(ui->pushButton_switch, "2");
     connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(sendData(QString)));
 }
 
