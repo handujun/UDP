@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     udpSocket.bind(ui->spinBox_port->value(), QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint); // 绑定端口以接收
     connect(&udpSocket, SIGNAL(readyRead()), this, SLOT(udpReadyRead()));
     connect(ui->spinBox_port, SIGNAL(valueChanged(int)), this, SLOT(changePort()));
-    QTimer::singleShot(3000, this, SLOT(onConvenient()));
+    QTimer::singleShot(2000, this, SLOT(onConvenient()));
 
     QSignalMapper *signalMapper = new QSignalMapper(this);
     connect(ui->pushButton_open, SIGNAL(pressed()), signalMapper, SLOT(map()));
@@ -54,7 +54,7 @@ void MainWindow::onConvenient() {
         return;
     emit ui->pushButton_switch->pressed();
     QToolTip::showText(QPoint(100, 500), "软件退出");
-    QTimer::singleShot(500, qApp, SLOT(quit()));
+    QTimer::singleShot(0, qApp, SLOT(quit()));
 }
 
 void MainWindow::sendData(const QString &msg) {
