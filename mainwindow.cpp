@@ -1,10 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "settingmanager.h"
-#include <QToolTip>
+#include <QtWidgets>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
+    ui->comboBox_Style->addItems(QStyleFactory::keys());
+    ui->comboBox_Style->setCurrentIndex(-1);
+    connect(ui->comboBox_Style, SIGNAL(currentIndexChanged(QString)), this, SLOT(setStyle(QString)));
 
     SettingManager::registerWidgetList(this, QList<QWidget *>() << ui->lineEdit_ip << ui->spinBox_port << ui->textEdit_tx << ui->checkBox_broadcast << ui->checkBox_clearAfterTx << ui->checkBox_convenient << ui->comboBox_Style);
     SettingManager::loadWidgetConfig(this);
@@ -21,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     udpSocket.bind(ui->spinBox_port->value(), QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint); // 绑定端口以接收
     connect(&udpSocket, SIGNAL(readyRead()), this, SLOT(udpReadyRead()));
     connect(ui->spinBox_port, SIGNAL(valueChanged(int)), this, SLOT(changePort()));
-    connect(ui->comboBox_Style, SIGNAL(currentIndexChanged(QString)), this, SLOT(setStyle(QString)));
     QTimer::singleShot(1000, this, SLOT(onConvenient()));
 }
 
