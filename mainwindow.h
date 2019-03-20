@@ -23,6 +23,7 @@ private slots:
     void changePort();
     void onConvenient();
     void sendData(const QString &msg);
+    void setStyle(const QString &style);
 private:
     Ui::MainWindow *ui;
     QUdpSocket udpSocket;

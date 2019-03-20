@@ -6,13 +6,8 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    SettingManager::registerWidgetList(this, QList<QWidget *>() << ui->lineEdit_ip << ui->spinBox_port << ui->textEdit_tx << ui->checkBox_broadcast << ui->checkBox_clearAfterTx << ui->checkBox_convenient);
+    SettingManager::registerWidgetList(this, QList<QWidget *>() << ui->lineEdit_ip << ui->spinBox_port << ui->textEdit_tx << ui->checkBox_broadcast << ui->checkBox_clearAfterTx << ui->checkBox_convenient << ui->comboBox_Style);
     SettingManager::loadWidgetConfig(this);
-
-    udpSocket.bind(ui->spinBox_port->value(), QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint); // 绑定端口以接收
-    connect(&udpSocket, SIGNAL(readyRead()), this, SLOT(udpReadyRead()));
-    connect(ui->spinBox_port, SIGNAL(valueChanged(int)), this, SLOT(changePort()));
-    QTimer::singleShot(2000, this, SLOT(onConvenient()));
 
     QSignalMapper *signalMapper = new QSignalMapper(this);
     connect(ui->pushButton_open, SIGNAL(pressed()), signalMapper, SLOT(map()));
@@ -22,6 +17,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     signalMapper->setMapping(ui->pushButton_close, "1");
     signalMapper->setMapping(ui->pushButton_switch, "2");
     connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(sendData(QString)));
+
+    udpSocket.bind(ui->spinBox_port->value(), QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint); // 绑定端口以接收
+    connect(&udpSocket, SIGNAL(readyRead()), this, SLOT(udpReadyRead()));
+    connect(ui->spinBox_port, SIGNAL(valueChanged(int)), this, SLOT(changePort()));
+    connect(ui->comboBox_Style, SIGNAL(currentIndexChanged(QString)), this, SLOT(setStyle(QString)));
+    QTimer::singleShot(1000, this, SLOT(onConvenient()));
 }
 
 MainWindow::~MainWindow() {
@@ -53,7 +54,6 @@ void MainWindow::onConvenient() {
     if ( !ui->checkBox_convenient->isChecked() )
         return;
     emit ui->pushButton_switch->pressed();
-    QToolTip::showText(QPoint(100, 500), "软件退出");
     QTimer::singleShot(0, qApp, SLOT(quit()));
 }
 
@@ -62,4 +62,6 @@ void MainWindow::sendData(const QString &msg) {
     udpSocket.writeDatagram( msg.toUtf8(), addr, ui->spinBox_port->value() );
 }
 
-
+void MainWindow::setStyle(const QString &style) {
+    QApplication::setStyle(style);
+}
