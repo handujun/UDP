@@ -40,7 +40,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>30</pointsize>
            </font>
           </property>
           <property name="text">
@@ -68,7 +68,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>30</pointsize>
            </font>
           </property>
           <property name="text">
@@ -96,7 +96,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>30</pointsize>
            </font>
           </property>
           <property name="text">
@@ -281,9 +281,6 @@
             </property>
             <property name="text">
              <string>发送后清空</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
