@@ -153,7 +153,7 @@
              <string notr="true">color: rgb(255, 85, 0);</string>
             </property>
             <property name="text">
-             <string>界面选择：</string>
+             <string>界面风格：</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
